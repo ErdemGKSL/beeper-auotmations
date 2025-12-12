@@ -73,10 +73,10 @@ This project consists of multiple components working together:
 ## Modules
 
 The project is organized into modular components, each providing specific automation capabilities:
+- **Notification Manager**: Handle and manage Beeper notifications with custom rules and actions (It works, but not properly)
 
 ### Planned Modules
 
-- **Notification Manager**: Handle and manage Beeper notifications with custom rules and actions
 - **Auto Response**: Automatically respond to messages based on configurable patterns and conditions
 - *(More modules to be added)*
 
@@ -94,7 +94,6 @@ The project is organized into modular components, each providing specific automa
 
 - Rust 1.70+ (or edition 2024)
 - Beeper Desktop application running with local API enabled
-- Environment variable `BEEPER_TOKEN` set with your authentication token
 
 ### Building
 
@@ -106,12 +105,12 @@ cargo build --release
 
 #### Service
 ```bash
-BEEPER_TOKEN=your_token cargo run --release --bin beeper-service
+cargo run --release --bin auto-beeper-service
 ```
 
 #### Configurator
 ```bash
-cargo run --release --bin beeper-configurator
+cargo run --release --bin auto-beeper-configurator
 ```
 
 ## Configuration
