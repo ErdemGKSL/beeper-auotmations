@@ -161,7 +161,8 @@ download_binaries() {
     print_info "Downloading $service_binary..."
     print_info "URL: ${base_url}/${service_binary}"
     
-    if ! curl -f -L -o "$SERVICE_NAME$SUFFIX" "${base_url}/${service_binary}"; then
+    # Download with the full name from GitHub, then we'll rename it
+    if ! curl -f -L -o "${service_binary}" "${base_url}/${service_binary}"; then
         print_error "Failed to download service binary"
         print_error "URL: ${base_url}/${service_binary}"
         print_error "This usually means the binary for your platform doesn't exist in the release"
@@ -170,21 +171,24 @@ download_binaries() {
     fi
     
     # Verify it's actually a binary and not an error page
-    if file "$SERVICE_NAME$SUFFIX" | grep -q "text"; then
+    if file "${service_binary}" | grep -q "text"; then
         print_error "Downloaded file is not a binary!"
         print_error "Content:"
-        head -n 5 "$SERVICE_NAME$SUFFIX"
+        head -n 5 "${service_binary}"
         print_error ""
         print_error "The binary for $TARGET may not be available in this release."
         rm -rf "$tmp_dir"
         exit 1
     fi
     
+    # Rename to simple name
+    mv "${service_binary}" "$SERVICE_NAME$SUFFIX"
+    
     # Download configurator binary
     print_info "Downloading $configurator_binary..."
     print_info "URL: ${base_url}/${configurator_binary}"
     
-    if ! curl -f -L -o "$CONFIGURATOR_NAME$SUFFIX" "${base_url}/${configurator_binary}"; then
+    if ! curl -f -L -o "${configurator_binary}" "${base_url}/${configurator_binary}"; then
         print_error "Failed to download configurator binary"
         print_error "URL: ${base_url}/${configurator_binary}"
         rm -rf "$tmp_dir"
@@ -192,13 +196,16 @@ download_binaries() {
     fi
     
     # Verify configurator is also a binary
-    if file "$CONFIGURATOR_NAME$SUFFIX" | grep -q "text"; then
+    if file "${configurator_binary}" | grep -q "text"; then
         print_error "Downloaded configurator is not a binary!"
         print_error "Content:"
-        head -n 5 "$CONFIGURATOR_NAME$SUFFIX"
+        head -n 5 "${configurator_binary}"
         rm -rf "$tmp_dir"
         exit 1
     fi
+    
+    # Rename to simple name
+    mv "${configurator_binary}" "$CONFIGURATOR_NAME$SUFFIX"
     
     chmod +x "$SERVICE_NAME$SUFFIX" "$CONFIGURATOR_NAME$SUFFIX"
     
