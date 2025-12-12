@@ -2,6 +2,60 @@
 
 A powerful automation framework for the Beeper Desktop messenger app using its local REST API.
 
+## Quick Installation
+
+### Linux / macOS
+
+Run the following command in your terminal:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ErdemGKSL/beeper-auotmations/main/scripts/install.sh | bash
+```
+
+Or download and run manually:
+
+```bash
+wget https://raw.githubusercontent.com/ErdemGKSL/beeper-auotmations/main/scripts/install.sh
+chmod +x install.sh
+./install.sh
+```
+
+This will:
+- Download the latest binaries for your platform
+- Install them to `/usr/local/bin`
+- Set up and start the service automatically (systemd for Linux, launchd for macOS)
+
+### Windows
+
+Run the following command in PowerShell or CMD as **Administrator**:
+
+```powershell
+powershell -c "irm https://raw.githubusercontent.com/ErdemGKSL/beeper-auotmations/main/scripts/install.ps1 | iex"
+```
+
+Alternatively, you can run directly in PowerShell:
+
+```powershell
+irm https://raw.githubusercontent.com/ErdemGKSL/beeper-auotmations/main/scripts/install.ps1 | iex
+```
+
+Or download and run manually:
+
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ErdemGKSL/beeper-auotmations/main/scripts/install.ps1" -OutFile install.ps1
+.\install.ps1
+```
+
+This will:
+- Download the latest Windows binaries
+- Install them to `C:\Program Files\BeeperAutomations`
+- Create and start a Windows service
+- Add the installation directory to your PATH
+
+### Manual Installation
+
+Download the latest release binaries from the [releases page](https://github.com/ErdemGKSL/beeper-auotmations/releases) for your platform.
+
 ## Overview
 
 Beeper Automations is a Rust-based project that provides automated functionality and management tools for the Beeper Desktop messenger application. It leverages the Beeper Desktop API (local API running at `localhost:23373`) to enable sophisticated automation workflows and user-friendly configuration management.

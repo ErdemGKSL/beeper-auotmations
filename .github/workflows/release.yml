@@ -151,6 +151,10 @@ jobs:
       run: |
         # Copy all binaries from artifacts directories
         find artifacts -name "auto-beeper-*" -type f -exec cp {} release/ \;
+        # Copy install scripts
+        cp scripts/install.sh release/install.sh
+        cp scripts/install.ps1 release/install.ps1
+        chmod +x release/install.sh
         ls -la release/
     
     - name: Generate release tag
@@ -181,6 +185,38 @@ jobs:
           **Binaries included:**
           - `auto-beeper-service` - Background service for automation execution
           - `auto-beeper-configurator` - TUI for configuration management
+          - `install.sh` - Installation script for Linux and macOS
+          - `install.ps1` - Installation script for Windows
+          
+          **Quick Install:**
+          
+          **Linux/macOS:**
+          ```bash
+          curl -sSL https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.tag }}/install.sh | bash
+          ```
+          
+          Or download and run manually:
+          ```bash
+          wget https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.tag }}/install.sh
+          chmod +x install.sh
+          ./install.sh
+          ```
+          
+          **Windows (PowerShell as Administrator):**
+          ```powershell
+          powershell -c "irm https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.tag }}/install.ps1 | iex"
+          ```
+          
+          Or run directly in PowerShell:
+          ```powershell
+          irm https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.tag }}/install.ps1 | iex
+          ```
+          
+          Or download and run manually:
+          ```powershell
+          Invoke-WebRequest -Uri "https://github.com/${{ github.repository }}/releases/download/${{ steps.tag.outputs.tag }}/install.ps1" -OutFile install.ps1
+          .\install.ps1
+          ```
           
           **Branch:** ${{ github.ref_name }}
           **Commit:** ${{ github.sha }}
